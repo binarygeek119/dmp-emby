@@ -38,8 +38,8 @@ class JellyfinMediaSyncService implements MediaSyncInterface
 		$plugin = [
 			'type' => 'media_source',
 			'plugin_key' => 'dmp-jellyfin',
-			'name' => 'Jellyfin Media Sync and Now Playing',
-			'description' => 'Syncs movie posters and shows now playing.',
+			'name' => 'Jellyfin Now Playing',
+			'description' => 'Shows now playing.',
 			'url' => 'https://github.com/newelement/dmp-jellyfin',
 			'repo' => 'newelement/dmp-jellyfin',
 			'version' => '1.0.0',
