@@ -9,7 +9,7 @@ use App\Facades\PluginFacade as Plugin;
 
 class DmpJellyfinServiceProvider extends ServiceProvider
 {
-    private $pluginName = 'dmp-jelllyfin';
+    private $pluginName = 'dmp-jellyfin';
 
     public function register()
     {
@@ -47,7 +47,7 @@ class DmpJellyfinServiceProvider extends ServiceProvider
         $this->app->booted(function () {
             // Optional set a command to run on a schedule
             //$schedule = $this->app->make(Schedule::class);
-            //$schedule->command('dmp-jelllyfin:sync')->dailyAt('03:00');
+            //$schedule->command('dmp-jellyfin:sync')->dailyAt('03:00');
         });
 
         $this->registerPlugin();
@@ -68,7 +68,7 @@ class DmpJellyfinServiceProvider extends ServiceProvider
             'plugin_key' => $this->pluginName,
             'name' => 'Jellyfin Now Playing',
             'description' => 'Shows now playing.',
-            'repo' => 'newelement/dmp-jelllyfin',
+            'repo' => 'newelement/dmp-jellyfin',
             'assets' => [
                 'scripts' => ['now_playing' => 'nowplaying.js'], // 'plugin' => 'plugin.js'
                 'styles' => 'plugin.css'

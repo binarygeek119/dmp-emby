@@ -1,39 +1,39 @@
 <div class="py-4">
 	<h4 class="text-2xl font-bold mb-4">Jellyfin Settings</h4>
 
-	<form action="/dmp-jelllyfin/settings" method="post">
+	<form action="/dmp-jellyfin/settings" method="post">
 		@csrf
 		@method('put')
 		<div class="mb-5">
-			<label for="jelllyfin-server-url" class="block mb-2 font-bold"
+			<label for="jellyfin-server-url" class="block mb-2 font-bold"
 				>Jellyfin IP Address</label
 			>
 			<input
 				type="text"
 				class="w-full mb-2"
-				id="jelllyfin-server-url"
-				aria-describedby="jelllyfin-server-urlHelp"
-				name="jelllyfin_ip_address"
-				value="{{ $options['jelllyfin_ip_address'] }}"
+				id="jellyfin-server-url"
+				aria-describedby="jellyfin-server-urlHelp"
+				name="jellyfin_ip_address"
+				value="{{ $options['jellyfin_ip_address'] }}"
 				required
 			/>
-			<div id="jelllyfin-server-urlHelp" class="text-gray-400 text-sm">Ex: localhost, 10.0.0.32</div>
+			<div id="jellyfin-server-urlHelp" class="text-gray-400 text-sm">Ex: localhost, 10.0.0.32</div>
 		</div>
 
 		<div class="mb-5">
-			<label for="jelllyfin-server-port" class="block mb-2 font-bold"
+			<label for="jellyfin-server-port" class="block mb-2 font-bold"
 				>Jellyfin API Token</label
 			>
 			<input
 				type="text"
 				class="w-full mb-2"
-				id="jelllyfin-server-port"
-				aria-describedby="jelllyfin-server-portHelp"
-				name="jelllyfin_token"
-				value="{{ $options['jelllyfin_token'] }}"
+				id="jellyfin-server-port"
+				aria-describedby="jellyfin-server-portHelp"
+				name="jellyfin_token"
+				value="{{ $options['jellyfin_token'] }}"
 				required
 			/>
-			<div id="jelllyfin-server-portHelp" class="text-gray-400 text-sm"></div>
+			<div id="jellyfin-server-portHelp" class="text-gray-400 text-sm"></div>
 		</div>
 
 		<div class="mb-5">
@@ -45,7 +45,7 @@
 					aria-describedby="plex-use-sslHelp"
 					name="jellyfin_use_ssl"
 					value="1"
-					@checked(old('jellyfin_use_ssl', $options['jelllyfin_use_ssl']))
+					@checked(old('jellyfin_use_ssl', $options['jellyfin_use_ssl']))
 				/>
 				<span class="ml-2">Use SSL for Jellyfin IP address</span>
 			</label>

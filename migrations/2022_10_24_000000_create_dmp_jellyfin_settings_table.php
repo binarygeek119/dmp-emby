@@ -13,7 +13,7 @@ class CreateDmpJellyfinSettingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('dmp_jelllyfin_settings', function (Blueprint $table) {
+        Schema::create('dmp_jellyfin_settings', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ class CreateDmpJellyfinSettingsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('dmp_jelllyfin_settings');
+        Schema::drop('dmp_jellyfin_settings');
     }
 }

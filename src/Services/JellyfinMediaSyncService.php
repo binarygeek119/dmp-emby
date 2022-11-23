@@ -13,7 +13,7 @@ class JellyfinMediaSyncService implements MediaSyncInterface
 {
 	use PosterProcess;
 
-	public $jelllyfinSettings = [];
+	public $jellyfinSettings = [];
 
 	public function __construct()
 	{
@@ -37,11 +37,11 @@ class JellyfinMediaSyncService implements MediaSyncInterface
 
 		$plugin = [
 			'type' => 'media_source',
-			'plugin_key' => 'dmp-jelllyfin',
+			'plugin_key' => 'dmp-jellyfin',
 			'name' => 'Jellyfin Media Sync and Now Playing',
 			'description' => 'Syncs movie posters and shows now playing.',
-			'url' => 'https://github.com/newelement/dmp-jelllyfin',
-			'repo' => 'newelement/dmp-jelllyfin',
+			'url' => 'https://github.com/newelement/dmp-jellyfin',
+			'repo' => 'newelement/dmp-jellyfin',
 			'version' => '1.0.0',
 		];
 
@@ -51,20 +51,20 @@ class JellyfinMediaSyncService implements MediaSyncInterface
 			[
 				'type' => 'string',
 				'value' => '',
-				'field_name' => 'jelllyfin_ip_address',
-				'plugin_key' => 'dmp-jelllyfin',
+				'field_name' => 'jellyfin_ip_address',
+				'plugin_key' => 'dmp-jellyfin',
 			],
 			[
 				'type' => 'string',
 				'value' => '',
-				'field_name' => 'jelllyfin_token',
-				'plugin_key' => 'dmp-jelllyfin',
+				'field_name' => 'jellyfin_token',
+				'plugin_key' => 'dmp-jellyfin',
 			],
 			[
 				'type' => 'boolean',
 				'value' => false,
-				'field_name' => 'jelllyfin_use_ssl',
-				'plugin_key' => 'dmp-jelllyfin',
+				'field_name' => 'jellyfin_use_ssl',
+				'plugin_key' => 'dmp-jellyfin',
 			],
 		];
 
@@ -80,22 +80,22 @@ class JellyfinMediaSyncService implements MediaSyncInterface
 
 	public function setJellyfinSettings()
 	{
-		// Can also call Plugin::getOptions('dmp-jelllyfin') to get full options array
-		$this->jelllyfinSettings['jelllyfin_ip_address'] = Plugin::getOptionValue('jelllyfin_ip_address');
-		$this->jelllyfinSettings['jelllyfin_token'] = Plugin::getOptionValue('jelllyfin_token');
-		$this->jelllyfinSettings['jelllyfin_use_ssl'] = Plugin::getOptionValue('jelllyfin_use_ssl');
+		// Can also call Plugin::getOptions('dmp-jellyfin') to get full options array
+		$this->jellyfinSettings['jellyfin_ip_address'] = Plugin::getOptionValue('jellyfin_ip_address');
+		$this->jellyfinSettings['jellyfin_token'] = Plugin::getOptionValue('jellyfin_token');
+		$this->jellyfinSettings['jellyfin_use_ssl'] = Plugin::getOptionValue('jellyfin_use_ssl');
 	}
 
 	public function getSettings()
 	{
-		return $this->jelllyfinSettings;
+		return $this->jellyfinSettings;
 	}
 
 	public function updateSettings($request)
 	{
-		Plugin::updateOption('jelllyfin_ip_address', $request->jelllyfin_ip_address);
-		Plugin::updateOption('jelllyfin_token', $request->jelllyfin_token);
-		Plugin::updateOption('jelllyfin_use_ssl', $request->jelllyfin_use_ssl);
+		Plugin::updateOption('jellyfin_ip_address', $request->jellyfin_ip_address);
+		Plugin::updateOption('jellyfin_token', $request->jellyfin_token);
+		Plugin::updateOption('jellyfin_use_ssl', $request->jellyfin_use_ssl);
 	}
 
 	/**
@@ -109,10 +109,10 @@ class JellyfinMediaSyncService implements MediaSyncInterface
 	 */
 	public function apiCall($path, $method = 'GET', $params = [])
 	{
-		$protocol = $this->jelllyfinSettings['jelllyfin_use_ssl'] ? 'https' : 'http';
+		$protocol = $this->jellyfinSettings['jellyfin_use_ssl'] ? 'https' : 'http';
 		$response = Http::withHeaders([
 			'Accept' => 'application/json',
-		])->get($protocol.'://'.$this->jelllyfinSettings['jelllyfin_ip_address'].':8096'.$path.'?api_key='.$this->jelllyfinSettings['jelllyfin_token']);
+		])->get($protocol.'://'.$this->jellyfinSettings['jellyfin_ip_address'].':8096'.$path.'?api_key='.$this->jellyfinSettings['jellyfin_token']);
 
 		return $response->json();
 	}
@@ -126,11 +126,11 @@ class JellyfinMediaSyncService implements MediaSyncInterface
 
 	public function processMovies($movies)
 	{
-		$protocol = $this->jelllyfinSettings['jelllyfin_use_ssl'] ? 'https' : 'http';
+		$protocol = $this->jellyfinSettings['jellyfin_use_ssl'] ? 'https' : 'http';
 
 		foreach ($movies as $movie) {
 			if ($movie['Type'] === 'Movie') {
-				$imageUrl = $protocol.'://'.$this->jelllyfinSettings['jelllyfin_ip_address'].':8096/Items/'.$movie['Id'].'/Images/Primary';
+				$imageUrl = $protocol.'://'.$this->jellyfinSettings['jellyfin_ip_address'].':8096/Items/'.$movie['Id'].'/Images/Primary';
 
 				$savedImage = $this->saveImage($movie['Name'], $imageUrl);
 

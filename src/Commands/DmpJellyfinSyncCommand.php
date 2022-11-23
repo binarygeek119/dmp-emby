@@ -12,7 +12,7 @@ class DmpJellyfinSyncCommand extends Command
      *
      * @var string
      */
-    protected $name = 'dmp-jelllyfin:sync';
+    protected $name = 'dmp-jellyfin:sync';
 
     /**
      * The console command description.

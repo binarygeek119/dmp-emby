@@ -1,5 +1,5 @@
-let jelllyfinSettings = {};
-let jelllyfinPlaying = false;
+let jellyfinSettings = {};
+let jellyfinPlaying = false;
 let jellyfinDevicePlaying = null;
 
 function setJellyfinNowPlaying(playing) {
@@ -10,7 +10,7 @@ function setJellyfinNowPlaying(playing) {
 }
 
 function setJellyfinStoppedPlaying() {
-    jelllyfinPlaying = false;
+    jellyfinPlaying = false;
     axios
         .post('/api/stopped', { service: 'dmp-jellyfin' })
         .then(() => {})
@@ -19,7 +19,7 @@ function setJellyfinStoppedPlaying() {
 
 function jellyfinNowPlaying() {
     if (jellyfinDevicePlaying) {
-        let protocol = jelllyfinSettings.jellyfin_use_ssl ? 'https' : 'http';
+        let protocol = jellyfinSettings.jellyfin_use_ssl ? 'https' : 'http';
         let playing = {
             contentRating: jellyfinDevicePlaying.NowPlayingItem.OfficialRating,
             audienceRating: jellyfinDevicePlaying.NowPlayingItem.CommunityRating,
@@ -27,7 +27,7 @@ function jellyfinNowPlaying() {
             poster:
                 protocol +
                 '://' +
-                jelllyfinSettings.jellyfin_ip_address +
+                jellyfinSettings.jellyfin_ip_address +
                 ':8096/Items/' +
                 jellyfinDevicePlaying.NowPlayingItem.Id +
                 '/Images/Primary',
@@ -39,15 +39,15 @@ function jellyfinNowPlaying() {
 
 function startJellyfinSocket() {
     // Jellyfin - we have to poll. Does not have socket for now playing
-    let protocol = jelllyfinSettings.jellyfin_use_ssl ? 'https' : 'http';
+    let protocol = jellyfinSettings.jellyfin_use_ssl ? 'https' : 'http';
     setInterval(() => {
         axios
             .get(
                 protocol +
                     '://' +
-                    jelllyfinSettings.jellyfin_ip_address +
+                    jellyfinSettings.jellyfin_ip_address +
                     ':8096/Sessions?api_key=' +
-                    jelllyfinSettings.jellyfin_token
+                    jellyfinSettings.jellyfin_token
             )
             .then((response) => {
                 let devices = response.data;
@@ -76,9 +76,9 @@ function startJellyfinSocket() {
 document.addEventListener('DOMContentLoaded', function () {
     setTimeout(() => {
         axios
-            .get('/api/dmp-jelllyfin-settings')
+            .get('/api/dmp-jellyfin-settings')
             .then((response) => {
-                jelllyfinSettings = response.data;
+                jellyfinSettings = response.data;
                 startJellyfinSocket();
             })
             .catch((response) => {
