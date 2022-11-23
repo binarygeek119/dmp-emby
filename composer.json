@@ -1,8 +1,8 @@
 {
-    "name": "newelement/dmp-jelllyfin",
+    "name": "newelement/dmp-jellyfin",
     "description": "Jellyfin plugin for DMP",
     "license": "GPL-2.0-or-later",
-    "homepage": "http://github.com/newelement/dmp-jelllyfin",
+    "homepage": "http://github.com/newelement/dmp-jellyfin",
     "authors": [
         {
             "name": "Don Jones",
