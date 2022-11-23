@@ -1,0 +1,33 @@
+{
+    "name": "newelement/dmp-jelllyfin",
+    "description": "Jellyfin plugin for DMP",
+    "license": "GPL-2.0-or-later",
+    "homepage": "http://github.com/newelement/dmp-jelllyfin",
+    "authors": [
+        {
+            "name": "Don Jones",
+            "email": "newelementdesigns@me.com"
+        }
+    ],
+    "require": {
+        "newelement/digital-movie-poster": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Newelement\\DmpJellyfin\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Newelement\\DmpJellyfin\\Tests\\": "tests"
+        }
+    },
+    "minimum-stability": "stable",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Newelement\\DmpJellyfin\\DmpJellyfinServiceProvider"
+            ]
+        }
+    }
+}
