@@ -1,10 +1,10 @@
 <?php
 
-use Newelement\DmpJellyfin\Http\Controllers\DmpJellyfinController;
+use Newelement\DmpEmby\Http\Controllers\DmpEmbyController;
 
 // These are /api/* routes
-Route::get('/dmp-jellyfin-settings', [DmpJellyfinController::class, 'getSettings']);
-Route::get('/dmp-jellyfin-now-playing', [DmpJellyfinController::class, 'getNowPlaying']);
+Route::get('/dmp-emby-settings', [DmpEmbyController::class, 'getSettings']);
+Route::get('/dmp-emby-now-playing', [DmpEmbyController::class, 'getNowPlaying']);
 
-Route::get('/dmp-jellyfin-install', [DmpJellyfinController::class, 'install']);
-Route::get('/dmp-jellyfin-update', [DmpJellyfinController::class, 'update']);
+Route::get('/dmp-emby-install', [DmpEmbyController::class, 'install']);
+Route::get('/dmp-emby-update', [DmpEmbyController::class, 'update']);

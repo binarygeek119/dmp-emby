@@ -1,8 +1,8 @@
 {
-    "name": "newelement/dmp-jellyfin",
-    "description": "Jellyfin plugin for DMP",
+    "name": "newelement/dmp-emby",
+    "description": "Emby plugin for DMP",
     "license": "GPL-2.0-or-later",
-    "homepage": "http://github.com/newelement/dmp-jellyfin",
+    "homepage": "http://github.com/newelement/dmp-emby",
     "authors": [
         {
             "name": "Don Jones",
@@ -14,19 +14,19 @@
     },
     "autoload": {
         "psr-4": {
-            "Newelement\\DmpJellyfin\\": "src/"
+            "Newelement\\DmpEmby\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Newelement\\DmpJellyfin\\Tests\\": "tests"
+            "Newelement\\DmpEmby\\Tests\\": "tests"
         }
     },
     "minimum-stability": "stable",
     "extra": {
         "laravel": {
             "providers": [
-                "Newelement\\DmpJellyfin\\DmpJellyfinServiceProvider"
+                "Newelement\\DmpEmby\\DmpEmbyServiceProvider"
             ]
         }
     }

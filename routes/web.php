@@ -1,5 +1,5 @@
 <?php
 
-use Newelement\DmpJellyfin\Http\Controllers\DmpJellyfinController;
+use Newelement\DmpEmby\Http\Controllers\DmpEmbyController;
 
-Route::put('/dmp-jellyfin/settings', [DmpJellyfinController::class, 'updateSettings'])->name('dmp-jellyfin.settings');
+Route::put('/dmp-emby/settings', [DmpEmbyController::class, 'updateSettings'])->name('dmp-emby.settings');

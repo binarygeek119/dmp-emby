@@ -1,0 +1,80 @@
+<?php
+
+namespace Newelement\DmpJellyfin;
+
+use Illuminate\Routing\Router;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Console\Scheduling\Schedule;
+use App\Facades\PluginFacade as Plugin;
+
+class DmpJellyfinServiceProvider extends ServiceProvider
+{
+    private $pluginName = 'dmp-jellyfin';
+
+    public function register()
+    {
+        $this->app->singleton($this->pluginName, function () {
+            return new DmpJellyfin();
+        });
+
+        $this->registerConsoleCommands();
+    }
+
+    public function boot(Router $router)
+    {
+        $viewsDirectory = __DIR__.'/../resources/views/public';
+        $publishAssetsDirectory = __DIR__.'/../publishable/assets';
+
+        // Public views
+        $this->loadViewsFrom($viewsDirectory, $this->pluginName);
+        $this->publishes([$viewsDirectory => base_path('resources/views/vendor/'.$this->pluginName)], 'views');
+        $this->publishes([ $publishAssetsDirectory => public_path('vendor/'.$this->pluginName) ], 'public');
+
+        // Register routes
+        $router->group([
+            'prefix' => 'api',
+            'middleware' => ['api']
+        ], function ($router) {
+            require __DIR__.'/../routes/api.php';
+        });
+
+        $router->group([
+            'middleware' => ['web']
+        ], function ($router) {
+            require __DIR__.'/../routes/web.php';
+        });
+
+        $this->app->booted(function () {
+            // Optional set a command to run on a schedule
+            //$schedule = $this->app->make(Schedule::class);
+            //$schedule->command('dmp-jellyfin:sync')->dailyAt('03:00');
+        });
+
+        $this->registerPlugin();
+    }
+
+    /**
+     * Register the commands accessible from the Console.
+     */
+    private function registerConsoleCommands()
+    {
+        $this->commands(Commands\DmpJellyfinSyncCommand::class);
+    }
+
+    private function registerPlugin()
+    {
+        $pluginInfo = [
+            'type' => 'media_source',
+            'plugin_key' => $this->pluginName,
+            'name' => 'Jellyfin Now Playing',
+            'description' => 'Shows now playing.',
+            'repo' => 'newelement/dmp-jellyfin',
+            'assets' => [
+                'scripts' => ['now_playing' => 'nowplaying.js'], // 'plugin' => 'plugin.js'
+                'styles' => 'plugin.css'
+            ]
+        ];
+
+        Plugin::register($pluginInfo);
+    }
+}

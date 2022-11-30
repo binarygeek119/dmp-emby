@@ -1,57 +1,57 @@
-let jellyfinSettings = {};
-let jellyfinPlaying = false;
-let jellyfinDevicePlaying = null;
+let embySettings = {};
+let embyPlaying = false;
+let embyDevicePlaying = null;
 
-function setJellyfinNowPlaying(playing) {
+function setEmbyNowPlaying(playing) {
     axios
         .post('/api/now-playing', playing)
         .then(() => {})
         .catch(() => {});
 }
 
-function setJellyfinStoppedPlaying() {
-    jellyfinPlaying = false;
+function setembyStoppedPlaying() {
+    embyPlaying = false;
     axios
-        .post('/api/stopped', { service: 'dmp-jellyfin' })
+        .post('/api/stopped', { service: 'dmp-emby' })
         .then(() => {})
         .catch(() => {});
 }
 
-function jellyfinNowPlaying() {
-    if (jellyfinDevicePlaying) {
-        let protocol = jellyfinSettings.jellyfin_use_ssl ? 'https' : 'http';
+function embyNowPlaying() {
+    if (embyDevicePlaying) {
+        let protocol = embySettings.emby_use_ssl ? 'https' : 'http';
         let playing = {
-            contentRating: jellyfinDevicePlaying.NowPlayingItem.OfficialRating,
-            audienceRating: jellyfinDevicePlaying.NowPlayingItem.CommunityRating,
-            duration: jellyfinDevicePlaying.NowPlayingItem.RunTimeTicks / 10000 / 1000 / 60,
+            contentRating: embyDevicePlaying.NowPlayingItem.OfficialRating,
+            audienceRating: embyDevicePlaying.NowPlayingItem.CommunityRating,
+            duration: embyDevicePlaying.NowPlayingItem.RunTimeTicks / 10000 / 1000 / 60,
             poster:
                 protocol +
                 '://' +
-                jellyfinSettings.jellyfin_ip_address +
-                ':8096/Items/' +
-                jellyfinDevicePlaying.NowPlayingItem.Id +
+                embySettings.emby_ip_address +
+                ':8096/emby/items/' +
+                embyDevicePlaying.NowPlayingItem.Id +
                 '/Images/Primary',
         };
 
-        setJellyfinNowPlaying(playing);
+        setembyNowPlaying(playing);
     }
 }
 
-function startJellyfinSocket() {
-    // Jellyfin - we have to poll. Does not have socket for now playing
-    let protocol = jellyfinSettings.jellyfin_use_ssl ? 'https' : 'http';
+function startembySocket() {
+    // emby - we have to poll. Does not have socket for now playing
+    let protocol = embySettings.emby_use_ssl ? 'https' : 'http';
     setInterval(() => {
         axios
             .get(
                 protocol +
                     '://' +
-                    jellyfinSettings.jellyfin_ip_address +
+                    embySettings.emby_ip_address +
                     ':8096/Sessions?api_key=' +
-                    jellyfinSettings.jellyfin_token
+                    embySettings.emby_token
             )
             .then((response) => {
                 let devices = response.data;
-                jellyfinDevicePlaying = devices.find((device) => {
+                embyDevicePlaying = devices.find((device) => {
                     if (
                         device.hasOwnProperty('NowPlayingItem') &&
                         device.NowPlayingItem.Type === 'Movie'
@@ -60,15 +60,15 @@ function startJellyfinSocket() {
                     }
                 });
 
-                if (jellyfinDevicePlaying) {
-                    jellyfinNowPlaying();
+                if (embyDevicePlaying) {
+                    embyNowPlaying();
                 } else {
-                    setJellyfinStoppedPlaying();
+                    setembyStoppedPlaying();
                 }
             })
             .catch(() => {
-                jellyfinDevicePlaying = null;
-                setJellyfinStoppedPlaying();
+                embyDevicePlaying = null;
+                setembyStoppedPlaying();
             });
     }, 7000);
 }
@@ -76,14 +76,14 @@ function startJellyfinSocket() {
 document.addEventListener('DOMContentLoaded', function () {
     setTimeout(() => {
         axios
-            .get('/api/dmp-jellyfin-settings')
+            .get('/api/dmp-emby-settings')
             .then((response) => {
-                jellyfinSettings = response.data;
-                startJellyfinSocket();
+                embySettings = response.data;
+                startembySocket();
             })
             .catch((response) => {
                 console.log(response);
-                console.log('COULD NOT GET JELLYFIN SETTINGS');
+                console.log('COULD NOT GET emby SETTINGS');
             });
     }, 5000);
 });
