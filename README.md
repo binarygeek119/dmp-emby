@@ -1,1 +1,1 @@
-# Jellyfin Plugin for Digital Movie Poster (DMP)
+# Emby Plugin for Digital Movie Poster (DMP)
